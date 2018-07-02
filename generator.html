@@ -3,10 +3,13 @@
 <title>TK Generator</title>
 </head>
 <body>
-<form>
+<form id="formwrapper">
 <select name="configuration" value="Keyboard"><option>Keyboard</option><option>Mouse</option></select>
 <input type="checkbox" name="verboose">
 <input type="submit" value="Generate">
+<button id="add-row">New toggle</button>
+<div id="toggles" />  
 </form>
+<script src="generator.js" />
 </body>
 </html>

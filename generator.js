@@ -30,9 +30,9 @@ const root = document.getElementById("root");
 function app() {
   this.root = createElement('form',{'class':'form-root'}).append(root);
   this.options = {
-    configuration: createElement('select').append(this.root),
-    verboose: createElement('input',{'type':'checkbox'}).append(this.root),
-    save: createElement('input',{'type':'submit'}).append(this.root)
+    configuration: createElement('select').append(this.root.node),
+    verboose: createElement('input',{'type':'checkbox'}).append(this.root.node),
+    save: createElement('input',{'type':'submit'}).append(this.root.node)
   };
   return this;
 }

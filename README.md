@@ -10,4 +10,6 @@ The code below can be used in the script section of profiles in logitech gaming 
 
 **Enjoy!**
 
-[code](https://github.com/Douile/logitech-toggle-keys/blob/eace772aa7b97c9da6845179ad7197b0540dfe11/code.lua)
+[code](/code.lua)
+
+[generator](https://douile.github.io/logitech-toggle-keys/generator.html)

@@ -1,6 +1,5 @@
 // generator.js
 
-function() {
 function createElement(tag, options) {
   this.node = document.createElement(tag);
   this.setAttribute = function(name, value) {
@@ -39,4 +38,3 @@ function app() {
 }
 
 var appRoot = app();
-}();

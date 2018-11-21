@@ -169,7 +169,7 @@ function parseKey(code) {
   } else if (/^shift(?:left|right)$/i.test(code)) {
     key = code.substr(5,1)+'shift';
   } else if (/^control(?:left|right)$/i.test(code)) {
-    key = code.substr(7,1)+'control';
+    key = code.substr(7,1)+'ctrl';
   } else if (/^alt(?:left|right)$/i.test(code)) {
     key = code.substr(3,1)+'alt';
   } else if (/^intlbackslash$/i.test(code)) {

@@ -1,7 +1,7 @@
 -- choose your keys here
 -- e.g. if I wanted button 1 to toggle e I would put {e=1};
 -- e.g. if I wanted button 3 to toggle e I would put {e=3,f=3,g=2};
-keysetup = {e=3}; 
+keysetup = {e=3};
 -- if using mouse set to true
 mouse = false;
 -- set to true to log all button presses (useful when you don't know what number a key is)
@@ -10,7 +10,7 @@ logall = true;
 -- do not change the code below
 OutputLogMessage("Script initialized\nWritten by: Douile\n");
 if (mouse == true) then
-	eventlisten = "M_PRESSED";
+	eventlisten = "MOUSE_BUTTON_PRESSED";
 	OutputLogMessage("Configured for mouse buttons\n");
 else
 	eventlisten = "G_PRESSED";

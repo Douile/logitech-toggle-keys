@@ -28,7 +28,7 @@ const VALUES = {
       let nodeData = {
         'key': node.querySelector('.toggle-key').value,
         'button': node.querySelector('.toggle-button > select').value,
-        'taps': isNaN(parseInt(node.querySelector('.number-input > input').value)) ? node.querySelector('.number-input > input').value : '0'
+        'taps': node.querySelector('.number-input > input').value
       };
       output.push(nodeData);
     }

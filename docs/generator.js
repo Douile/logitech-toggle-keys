@@ -1,6 +1,6 @@
 // sorry about this messy ass code
 
-const OUTPUT_TEMPLATE = atob('LS0gY2hvb3NlIHlvdXIga2V5cyBoZXJlCi0tIGUuZy4gaWYgSSB3YW50ZWQgYnV0dG9uIDEgdG8gdG9nZ2xlIGUgSSB3b3VsZCBwdXQge2U9MX07Ci0tIGUuZy4gaWYgSSB3YW50ZWQgYnV0dG9uIDMgdG8gdG9nZ2xlIGUgSSB3b3VsZCBwdXQge2U9MyxmPTMsZz0yfTsKa2V5c2V0dXAgPSAlc2V0dXAlOyAKLS0gaWYgdXNpbmcgbW91c2Ugc2V0IHRvIHRydWUKbW91c2UgPSAlbW91c2UlOwotLSBzZXQgdG8gdHJ1ZSB0byBsb2cgYWxsIGJ1dHRvbiBwcmVzc2VzICh1c2VmdWwgd2hlbiB5b3UgZG9uJ3Qga25vdyB3aGF0IG51bWJlciBhIGtleSBpcykKbG9nYWxsID0gJWxvZyU7CgotLSBkbyBub3QgY2hhbmdlIHRoZSBjb2RlIGJlbG93Ck91dHB1dExvZ01lc3NhZ2UoIlNjcmlwdCBpbml0aWFsaXplZFxuV3JpdHRlbiBieTogRG91aWxlXG4iKTsKaWYgKG1vdXNlID09IHRydWUpIHRoZW4KICBldmVudGxpc3RlbiA9ICJNT1VTRV9CVVRUT05fUFJFU1NFRCI7CiAgT3V0cHV0TG9nTWVzc2FnZSgiQ29uZmlndXJlZCBmb3IgbW91c2UgYnV0dG9uc1xuIik7CmVsc2UKICBldmVudGxpc3RlbiA9ICJHX1BSRVNTRUQiOwogIE91dHB1dExvZ01lc3NhZ2UoIkNvbmZpZ3VyZWQgZm9yIGtleWJvYXJkIGJ1dHRvbnNcbiIpOwplbmQKZm9yIGssdiBpbiBwYWlycyhrZXlzZXR1cCkgZG8KICBPdXRwdXRMb2dNZXNzYWdlKCJCdXR0b24gJWQgd2lsbCB0b2dnbGUgJXNcbiIsdixrKTsKZW5kCk91dHB1dExvZ01lc3NhZ2UoIlxuLSBzdGFydCBydW50aW1lIGxvZyAtXG4iKTsKCmtleXNwcmVzc2VkID0ge307CgpmdW5jdGlvbiBPbkV2ZW50KGV2ZW50LCBhcmcpCiAgaWYgKGV2ZW50ID09IGV2ZW50bGlzdGVuKSB0aGVuCiAgICBpZiAobG9nYWxsID09IHRydWUpIHRoZW4KICAgICAgT3V0cHV0TG9nTWVzc2FnZSgiS2V5ICVkIHByZXNzZWRcbiIsYXJnKTsKICAgIGVuZAogICAgZm9yIGssdiBpbiBwYWlycyhrZXlzZXR1cCkgZG8KICAgICAgaWYgKGFyZyA9PSB2IGFuZCBrIH49IG51bGwpIHRoZW4KICAgICAgICBpZiAoa2V5c3ByZXNzZWRba10gPT0gdHJ1ZSkgdGhlbgogICAgICAgICAgUmVsZWFzZUtleShrKTsKICAgICAgICAgIGtleXNwcmVzc2VkW2tdID0gZmFsc2U7CiAgICAgICAgICBPdXRwdXRMb2dNZXNzYWdlKCJSZWNpZXZlZCAlcyAlZCByZWxlYXNlZCAlc1xuIixldmVudCx2LGspOwogICAgICAgIGVsc2UKICAgICAgICAgIFByZXNzS2V5KGspOwogICAgICAgICAga2V5c3ByZXNzZWRba10gPSB0cnVlOwogICAgICAgICAgT3V0cHV0TG9nTWVzc2FnZSgiUmVjaWV2ZWQgJXMgJWQgcHJlc3NlZCAlc1xuIixldmVudCx2LGspOwogICAgICAgIGVuZAogICAgICBlbmQKICAgIGVuZAogIGVuZAplbmQ=');
+const OUTPUT_TEMPLATE = atob('LS0gY2hvb3NlIHlvdXIga2V5cyBoZXJlCmtleXNldHVwID0gJXNldHVwJTsKLS0gaWYgdXNpbmcgbW91c2Ugc2V0IHRvIHRydWUKbW91c2UgPSAlbW91c2UlOwotLSBzZXQgdG8gdHJ1ZSB0byBsb2cgYWxsIGJ1dHRvbiBwcmVzc2VzICh1c2VmdWwgd2hlbiB5b3UgZG9uJ3Qga25vdyB3aGF0IG51bWJlciBhIGtleSBpcykKbG9nYWxsID0gJWxvZyU7Ci0tIGNoYW5nZSB0aGUgZGVsYXkgYmV0d2VlbiB0YXBzCnRhcF9kZWxheSA9ICVkZWxheSU7CnRhcF9ob2xkX2RlbGF5ID0gJWhvbGRfZGVsYXklOwoKLS0gZG8gbm90IGNoYW5nZSB0aGUgY29kZSBiZWxvdwpPdXRwdXRMb2dNZXNzYWdlKCJTY3JpcHQgaW5pdGlhbGl6ZWQKV3JpdHRlbiBieTogRG91aWxlCiIpOwppZiAobW91c2UgPT0gdHJ1ZSkgdGhlbgogIGV2ZW50bGlzdGVuID0gIk1PVVNFX0JVVFRPTl9QUkVTU0VEIjsKCU91dHB1dExvZ01lc3NhZ2UoIkNvbmZpZ3VyZWQgZm9yIG1vdXNlIGJ1dHRvbnMKIik7CmVsc2UKCWV2ZW50bGlzdGVuID0gIkdfUFJFU1NFRCI7CglPdXRwdXRMb2dNZXNzYWdlKCJDb25maWd1cmVkIGZvciBrZXlib2FyZCBidXR0b25zCiIpOwplbmQKZm9yIGssdiBpbiBwYWlycyhrZXlzZXR1cCkgZG8KCU91dHB1dExvZ01lc3NhZ2UoIkJ1dHRvbiAlZCB3aWxsIHRvZ2dsZSAlcyAoJWQgcHJlc3NlcykKIix2WzFdLGssdlsyXSk7CmVuZApPdXRwdXRMb2dNZXNzYWdlKCIKLSBzdGFydCBydW50aW1lIGxvZyAtCiIpOwoKa2V5c3ByZXNzZWQgPSB7fTsKCmZ1bmN0aW9uIE9uRXZlbnQoZXZlbnQsIGFyZykKICBpZiAoZXZlbnQgPT0gZXZlbnRsaXN0ZW4pIHRoZW4KICAgIGlmIChsb2dhbGwgPT0gdHJ1ZSkgdGhlbgogICAgICBPdXRwdXRMb2dNZXNzYWdlKCJLZXkgJWQgcHJlc3NlZAoiLGFyZyk7CiAgICBlbmQKICAgIGZvciBrLHYgaW4gcGFpcnMoa2V5c2V0dXApIGRvCiAgICAgIGlmIChhcmcgPT0gdlsxXSBhbmQgayB+PSBudWxsKSB0aGVuCiAgICAgICAgICBpZiAoa2V5c3ByZXNzZWRba10gPT0gdHJ1ZSkgdGhlbgogICAgICAgICAgICBSZWxlYXNlS2V5KGspOwogICAgICAgICAgICBrZXlzcHJlc3NlZFtrXSA9IGZhbHNlOwogICAgICAgICAgICBPdXRwdXRMb2dNZXNzYWdlKCJSZWNpZXZlZCAlcyAlZCByZWxlYXNlZCAlcwoiLGV2ZW50LHZbMV0sayk7CiAgICAgICAgICAgIE91dHB1dExDRE1lc3NhZ2Uoc3RyaW5nLmZvcm1hdCgiUHJlc3NpbmcgJXMiLGspKTsKICAgICAgICAgIGVsc2UKICAgICAgICAgICAgZm9yIGk9MCx2WzJdIGRvCiAgICAgICAgICAgICAgUHJlc3NLZXkoayk7CiAgICAgICAgICAgICAgU2xlZXAodGFwX2hvbGRfZGVsYXkpOwogICAgICAgICAgICAgIFJlbGVhc2VLZXkoayk7CiAgICAgICAgICAgICAgU2xlZXAodGFwX2RlbGF5KTsKICAgICAgICAgICAgZW5kCiAgICAgICAgICAgIFByZXNzS2V5KGspOwogICAgICAgICAgICBrZXlzcHJlc3NlZFtrXSA9IHRydWU7CiAgICAgICAgICAgIE91dHB1dExvZ01lc3NhZ2UoIlJlY2lldmVkICVzICVkIHByZXNzZWQgJXMKIixldmVudCx2WzFdLGspOwogICAgICAgICAgICBPdXRwdXRMQ0RNZXNzYWdlKHN0cmluZy5mb3JtYXQoIlJlbGVhc2luZyAlcyIsaykpOwogICAgICAgICAgZW5kCiAgICAgICAgZW5kCiAgICAgIGVuZAogICAgZW5kCiAgZW5kCmVuZAo=');
 
 
 const VALUES = {
@@ -27,11 +27,18 @@ const VALUES = {
       let node = nodes[i];
       let nodeData = {
         'key': node.querySelector('.toggle-key').value,
-        'button': node.querySelector('.toggle-button > select').value
+        'button': node.querySelector('.toggle-button > select').value,
+        'taps': isNaN(parseInt(node.querySelector('.number-input > input').value)) ? node.querySelector('.number-input > input').value : '0'
       };
       output.push(nodeData);
     }
     return output;
+  },
+  get tapDelay() {
+    return document.querySelector('#tap-delay').value;
+  },
+  get tapHoldDelay() {
+    return document.querySelector('#tap-hold-delay').value;
   },
   addToggle: function() {
     let dom = VALUES.newToggle();
@@ -46,6 +53,8 @@ const VALUES = {
     dom.appendChild(key);
     let button = VALUES.elements.newButton();
     dom.appendChild(button);
+    let number = VALUES.elements.newNumber();
+    dom.appendChild(number);
     let remove = VALUES.elements.newRemove();
     dom.appendChild(remove);
     return dom;
@@ -63,9 +72,10 @@ const VALUES = {
     },
     newButton: function() {
       let dom = document.createElement('div');
-      dom.setAttribute('class','toggle-button');
+      dom.setAttribute('class','inline-div toggle-button');
       let label = document.createElement('label');
       label.innerText = 'Button: ';
+      dom.appendChild(label);
       let select = document.createElement('select');
       let optionKeyCount = 18;
       for (var x=1;x < optionKeyCount+1;x++) {
@@ -83,6 +93,21 @@ const VALUES = {
       dom.setAttribute('type','submit');
       dom.setAttribute('value','Remove');
       dom.addEventListener('click',Actions.closeInput);
+      return dom;
+    },
+    newNumber: function() {
+      let dom = document.createElement('div');
+      dom.setAttribute('class','inline-div number-input');
+      let label = document.createElement('label');
+      label.innerText = 'Tap count: ';
+      dom.appendChild(label);
+      let input = document.createElement('input');
+      input.setAttribute('type','text');
+      input.setAttribute('value','0');
+      input.setAttribute('class','number')
+      // input.addEventListener('keydown',Actions.numberHandlerStart);
+      // input.addEventListener('keyup',Actions.numberHandlerEnd);
+      dom.appendChild(input);
       return dom;
     }
   }
@@ -147,6 +172,20 @@ const Actions = {
   },
   help: function() {
     alert('HELP\nClick key button to input a key (WARNING f keys still do normal function).\nIf unable to input key you can manually input the keyname by right clicking key button\n');
+  },
+  numberHandlerStart: function(e) {
+    if (e.key.match(/[^0-9]/) && e.key !== 'Backspace') {
+      e.preventDefault();
+    }
+  },
+  numberHandlerEnd: function(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g,'');
+    let n = parseInt(e.target.value).toString();
+    if (isNaN(n)) {
+      n = 0;
+    }
+    e.target.value = n.toString();
+    Actions.update();
   }
 }
 
@@ -196,11 +235,13 @@ function parseKey(code) {
 function output() {
   var mouse = VALUES.deviceType === 'Mouse' ? 'true' : 'false';
   var log = VALUES.logging;
+  var tapDelay = VALUES.tapDelay;
+  var tapHoldDelay = VALUES.tapHoldDelay;
   var keySetup = '{';
   var keys = VALUES.toggles;
   for (var i=0;i<keys.length;i++) {
     if (keys[i].key !== '') {
-      let key = `${keys[i].key}=${keys[i].button},`;
+      let key = `${keys[i].key}={${keys[i].button},${keys[i].taps}},`;
       keySetup += key;
     }
   }
@@ -208,7 +249,7 @@ function output() {
     keySetup = keySetup.substr(0,keySetup.length-1);
   }
   keySetup += '}';
-  var script = OUTPUT_TEMPLATE.replace('%setup%',keySetup).replace('%mouse%',mouse).replace('%log%',log);
+  var script = OUTPUT_TEMPLATE.replace('%setup%',keySetup).replace('%mouse%',mouse).replace('%log%',log).replace('%delay%',tapDelay).replace('%hold_delay%',tapHoldDelay);
   document.querySelector('#output-area').value = script;
 }
 
@@ -222,6 +263,20 @@ function init() {
   document.querySelector('#copy-output').addEventListener('click',Actions.copy);
   document.querySelector('#download-output').addEventListener('click',Actions.save);
   document.querySelector('#help').addEventListener('click',Actions.help);
+  window.addEventListener('keydown',(e) => {
+    if (e.target.tagName === 'INPUT') {
+      if (e.target.classList.contains('number')) {
+        Actions.numberHandlerStart(e);
+      }
+    }
+  });
+  window.addEventListener('keyup',(e) => {
+    if (e.target.tagName === 'INPUT') {
+      if (e.target.classList.contains('number')) {
+        Actions.numberHandlerEnd(e);
+      }
+    }
+  });
 }
 
 init();

@@ -29,9 +29,9 @@
 .inputs {
   position: absolute;
   left: 0;
-  top: 37px;
+  top: 67px;
   width: 100%;
-  height: calc(100% - 36px);
+  height: calc(100% - 67px);
   overflow-y: auto;
 }
 .inputs-body {
@@ -70,7 +70,7 @@
   border-radius: 5px;
   box-shadow: #000 3px 2px;
 }
-.toggle-button {
+.inline-div {
   display: inline-block;
 }
 .key-capture {
@@ -142,7 +142,9 @@
     <div class="header"><span class="title">Toggle Keys Script Generator</span></div>
     <div class="input"><div class="options">
       <label>Device type: </label><select id="device-type" value="Keyboard"><option>Keyboard</option><option>Mouse</option></select><br>
-      <label>Logging: </label><input id="logging" type="checkbox" value="false" /><br>
+      <label>Logging: </label><input id="logging" type="checkbox" value="false"/><br>
+      <label>Tap delay: </label><input class="number" id="tap-delay" type="text" value="30"/><br>
+      <label>Tap hold time: </label><input class="number" id="tap-hold-delay" type="text" value="10"/><br>
     </div><div class="inputs">
       <div class="inputs-body"></div>
       </div>

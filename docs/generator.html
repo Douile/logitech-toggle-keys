@@ -3,75 +3,15 @@
 <head>
 <meta charset="utf-8">
 <title>ToggleKeys</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
 <script src="io.js"></script>
 <style>
-.outer {
-  display: block;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.header {
-  font-size: 20px;
-  font-weight: bold;
-}
-.input {
-  display: block;
-  top: 23px;
-  left: 0;
-  width: 100%;
-  height: calc(50% - 23px);
-  position: absolute;
-}
-.inputs {
-  position: absolute;
-  left: 0;
-  top: 75px;
-  width: 100%;
-  height: calc(100% - 75px);
-  overflow-y: auto;
-}
-.inputs-body {
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-bottom: 20px;
-}
-.inputs-footer {
-  display: block;
-  left: 0;
-  bottom: 0;
-  position: absolute;
-  padding: 2px;
-  background: rgba(0,0,0,0.2);
-  width: 100%;
-}
-.output {
-  display: block;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  position: absolute;
-}
-#output-area {
-  resize: none;
-  width: 100%;
-  height: 100%;
-}
 .toggle {
-  display: block;
-  width: 99%;
-  margin: 0.5vw;
-  padding: 6px;
-  border: 1px solid #000;
-  border-radius: 5px;
-  box-shadow: #000 3px 2px;
+  background: var(--secondary-back-color);
 }
-.inline-div {
-  display: inline-block;
+.center {
+  text-align: center;
 }
 .key-capture {
   z-index: 9999;
@@ -124,8 +64,42 @@
   text-align: center;
   margin-top: -28px;
 }
-* {
-  box-sizing: border-box;
+.interface {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+}
+.options {
+  flex 0 1 auto;
+}
+.inputs-box {
+  flex 1 1 auto;
+  overflow-y: auto;
+}
+.panel {
+  position: fixed;
+  left: 0px;
+  bottom: 40%;
+  width: 100%;
+  pointer-events: none;
+}
+.panel button,label {
+  pointer-events: all;
+}
+.output {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 40%;
+  width: 100%;
+  display: flex;
+}
+#output-area {
+  flex: 1;
 }
 </style>
 </head>
@@ -135,24 +109,71 @@
       <div class="noscript-text">Sorry javascript is required</div>
     </div>
   </noscript>
-  <div class="outer">
-    <div class="key-capture">
-      <div class="key-capture-text">Press any key to continue...</div>
+  <div class="key-capture">
+    <div class="key-capture-text">Press any key to continue...</div>
+  </div>
+  <input type="checkbox" id="key-modal" class="modal">
+  <div role="dialog" aria-labelledby="dialog-title">
+    <div class="card large warning">
+      <h2 class="section" id="dialog-title">Press any key to continue...</h2>
     </div>
-    <div class="header"><span class="title">Toggle Keys Script Generator</span></div>
-    <div class="input"><div class="options">
-      <label>Device type: </label><select id="device-type" value="Keyboard"><option>Keyboard</option><option>Mouse</option></select><br>
-      <label>Logging: </label><input id="logging" type="checkbox" value="false"/><br>
-      <label>Tap delay: </label><input class="number" id="tap-delay" type="text" value="30"/><br>
-      <label>Tap hold time: </label><input class="number" id="tap-hold-delay" type="text" value="10"/><br>
-    </div><div class="inputs">
-      <div class="inputs-body"></div>
+  </div>
+  <input type="checkbox" id="download-modal" class="modal">
+  <div role="dialog" aria-labelledby="dialog-title">
+    <div class="card large">
+      <label for="download-modal" class="modal-close"></label>
+      <h3 class="section" id="dialog-title">Enter file name</h3>
+      <br>
+      <input name="download_name" class="section" type="text" placeholder="Filename" value="toggle_keys.lua">
+      <button class="tertiary large" id="download-output">Download</button>
+    </div>
+  </div>
+  <input type="checkbox" id="help-modal" class="modal">
+  <div role="dialog" aria-labelledby="dialog-title">
+    <div class="card large">
+      <label for="help-modal" class="modal-close" ></label>
+      <h3 class="section" id="dialog-title">Help</h3>
+      <div class="section collapse">
+        <input type="checkbox" id="collapse-section1" aria-hidden="true">
+        <label for="collapse-section1" aria-hidden="true">About</label>
+        <div>
+          <p>This page generates a lua script for toggling and tapping keys in the logitech gaming framework.</p>
+        </div>
+        <input type="checkbox" id="collapse-section2" aria-hidden="true">
+        <label for="collapse-section2" aria-hidden="true">Can't input a key</label>
+        <div>
+          <p>If a key you're inputting is not working simply right click on the key box and type in the key code found in Appendix A of the <a target="_blank" href="https://douile.github.io/logitech-toggle-keys/APIDocs.pdf">API documentation</a>.</p>
+        </div>
       </div>
-    <div class="inputs-footer"><input id="add-toggle" type="submit" value="Add toggle"> <span>Currently <span id="toggle-no">0</span> toggles.</span> <input id="copy-output" type="submit" value="Copy"> <input id="download-output" type="submit" value="Download"> <input id="help" type="submit" value="Help"></div>
     </div>
-    <div class="output">
-      <textarea id="output-area" readonly></textarea>
+  </div>
+  <div class="interface">
+    <div class="options">
+      <form class="center">
+        <fieldset>
+            <legend>Toggle Keys Script Generator</legend>
+            <label for="device-type">Device type:</label><select name="device-type" value="Keyboard"><option>Keyboard</option><option>Mouse</option></select>
+            <label for="logging">Logging:</label><input name="logging" type="checkbox" value="false"/>
+            <label for="tap-delay">Tap delay:</label><input class="number" name="tap-delay" type="text" value="30"/>
+            <label for="tap-hold-delay">Tap hold time:</label><input class="number" name="tap-hold-delay" type="text" value="10"/>
+        </fieldset>
+      </form>
     </div>
+    <div class="inputs-box">
+      <div class="inputs container">
+      </div>
+    </div>
+  </div>
+  <div class="panel row center">
+    <div class="col-md">
+      <button id="add-toggle">Add toggle (<span id="toggle-no">0</span>)</button>
+      <button id="copy-output"><span class="icon-edit"></span>Copy</button>
+      <label for="download-modal" class="button"><span class="icon-link"></span>Download</label>
+      <label for="help-modal" class="button"><span class="icon-help"></span>Help</label>
+    </div>
+  </div>
+  <div class="output">
+    <pre id="output-area"></pre>
   </div>
   <script src="generator.js"></script>
 </body>

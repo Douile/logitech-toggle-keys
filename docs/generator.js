@@ -5,10 +5,10 @@ const OUTPUT_TEMPLATE = atob('LS0gY2hvb3NlIHlvdXIga2V5cyBoZXJlDQprZXlzZXR1cCA9IC
 
 const VALUES = {
   get deviceType() {
-    return document.querySelector('#device-type').value;
+    return document.querySelector('select[name=device-type]').value;
   },
   get logging() {
-    return document.querySelector('#logging').checked;
+    return document.querySelector('input[name=logging]').checked;
   },
   set active(value) {
     let dom = document.querySelector('#toggle-no');
@@ -18,7 +18,7 @@ const VALUES = {
     return document.querySelectorAll('.toggle').length;
   },
   get toggleContainer() {
-    return document.querySelector('.inputs-body');
+    return document.querySelector('.inputs');
   },
   get toggles() {
     var output = [],
@@ -35,10 +35,10 @@ const VALUES = {
     return output;
   },
   get tapDelay() {
-    return document.querySelector('#tap-delay').value;
+    return document.querySelector('input[name=tap-delay]').value;
   },
   get tapHoldDelay() {
-    return document.querySelector('#tap-hold-delay').value;
+    return document.querySelector('input[name=tap-hold-delay]').value;
   },
   addToggle: function() {
     let dom = VALUES.newToggle();
@@ -48,31 +48,39 @@ const VALUES = {
   },
   newToggle: function() {
     let dom = document.createElement('div');
-    dom.setAttribute('class','toggle');
+    dom.setAttribute('class','toggle row');
     let key = VALUES.elements.newKey();
     dom.appendChild(key);
     let button = VALUES.elements.newButton();
     dom.appendChild(button);
     let number = VALUES.elements.newNumber();
     dom.appendChild(number);
+    let spacer = VALUES.elements.newSpacer();
+    dom.appendChild(spacer);
     let remove = VALUES.elements.newRemove();
     dom.appendChild(remove);
     return dom;
   },
   'elements': {
     newKey: function() {
-      let dom = document.createElement('input');
-      dom.setAttribute('type','text');
-      dom.setAttribute('placeholder','Key');
-      dom.setAttribute('class','toggle-key');
-      dom.setAttribute('title','Right click me for manual input');
-      dom.addEventListener('click',Actions.keyHandler);
-      dom.addEventListener('contextmenu',Actions.keyContHandler);
+      var dom = document.createElement('div');
+      dom.setAttribute('class','col-sm-2');
+      let span = document.createElement('span');
+      span.setAttribute('class','tooltip');
+      span.setAttribute('aria-label','Right click me for manual input');
+      dom.appendChild(span);
+      let input = document.createElement('input');
+      input.setAttribute('type','text');
+      input.setAttribute('placeholder','Key');
+      input.setAttribute('class','toggle-key');
+      input.addEventListener('click',Actions.keyHandler);
+      input.addEventListener('contextmenu',Actions.keyContHandler);
+      span.appendChild(input);
       return dom;
     },
     newButton: function() {
-      let dom = document.createElement('div');
-      dom.setAttribute('class','inline-div toggle-button');
+      var dom = document.createElement('div');
+      dom.setAttribute('class','col-sm-2 toggle-button');
       let label = document.createElement('label');
       label.innerText = 'Button: ';
       dom.appendChild(label);
@@ -89,15 +97,18 @@ const VALUES = {
       return dom;
     },
     newRemove: function() {
-      let dom = document.createElement('input');
-      dom.setAttribute('type','submit');
-      dom.setAttribute('value','Remove');
-      dom.addEventListener('click',Actions.closeInput);
+      var dom = document.createElement('div');
+      dom.setAttribute('class','col-sm-1');
+      let input = document.createElement('input');
+      input.setAttribute('type','submit');
+      input.setAttribute('value','Remove');
+      input.addEventListener('click',Actions.closeInput);
+      dom.appendChild(input);
       return dom;
     },
     newNumber: function() {
-      let dom = document.createElement('div');
-      dom.setAttribute('class','inline-div number-input');
+      var dom = document.createElement('div');
+      dom.setAttribute('class','col-sm-2 number-input');
       let label = document.createElement('label');
       label.innerText = 'Tap count: ';
       dom.appendChild(label);
@@ -109,13 +120,18 @@ const VALUES = {
       // input.addEventListener('keyup',Actions.numberHandlerEnd);
       dom.appendChild(input);
       return dom;
+    },
+    newSpacer: function() {
+      var dom = document.createElement('div');
+      dom.setAttribute('class','col-sm-5');
+      return dom;
     }
   }
 }
 
 const Actions = {
   closeInput: function(e) {
-    e.target.parentNode.remove();
+    e.target.parentNode.parentNode.remove();
     VALUES.active = VALUES.toggleCount;
     Actions.update();
   },
@@ -139,18 +155,18 @@ const Actions = {
   keyInput: function(e) {
     //e.target.blur();
     e.target.setAttribute('active-key','');
-    document.querySelector('.key-capture').setAttribute('capturing','');
+    document.querySelector('#key-modal').checked = true;
   },
   captureKey: function(e) {
-    let keyCapture = document.querySelector('.key-capture');
-    if (keyCapture.getAttribute('capturing') !== null) {
+    let keyCapture = document.querySelector('#key-modal');
+    if (keyCapture.checked === true) {
       e.preventDefault();
       let key = parseKey(e.code);
       let node = document.querySelector('.toggle-key[active-key]');
       node.value = key;
       node.removeAttribute('active-key');
       node.blur();
-      keyCapture.removeAttribute('capturing');
+      keyCapture.checked = false;
       Actions.update();
     }
   },
@@ -159,13 +175,14 @@ const Actions = {
   },
   copy: function() {
     Actions.update();
-    var text = document.querySelector('#output-area').value;
+    var text = document.querySelector('#output-area').innerText;
     copyTextToClipboard(text);
+    toast('Copied...',1500,500);
   },
   save: function() {
     Actions.update();
-    var text = document.querySelector('#output-area').value;
-    var filename = prompt('Enter filename','toggle_keys.lua');
+    var text = document.querySelector('#output-area').innerText;
+    var filename = document.querySelector('input[name=download_name]').value;
     if (filename !== null) {
       saveTextFile(filename,text);
     }
@@ -250,19 +267,41 @@ function output() {
   }
   keySetup += '}';
   var script = OUTPUT_TEMPLATE.replace('%setup%',keySetup).replace('%mouse%',mouse).replace('%log%',log).replace('%delay%',tapDelay).replace('%hold_delay%',tapHoldDelay);
-  document.querySelector('#output-area').value = script;
+  document.querySelector('#output-area').innerText = script;
 }
 
+function toast(message,delay,fadeTime) {
+  var opacity = 1,
+  interval = fadeTime/100,
+  node = document.createElement('span');
+  node.setAttribute('class','toast');
+  node.innerText = message;
+  node.style.opacity = opacity;
+  document.body.appendChild(node);
+  function update() {
+    opacity -= 0.01;
+    node.style.opacity = opacity;
+    if (opacity > 0) {
+      setTimeout(update,interval);
+    } else {
+      node.remove();
+    }
+  }
+  setTimeout(update,delay);
+}
 
 function init() {
   VALUES.addToggle();
   document.querySelector('#add-toggle').addEventListener('click',VALUES.addToggle);
   window.addEventListener('keydown',Actions.captureKey);
-  document.querySelector('#logging').addEventListener('click',Actions.update);
-  document.querySelector('#device-type').addEventListener('change',Actions.update);
+  document.querySelector('input[name=logging]').addEventListener('click',Actions.update);
+  document.querySelector('select[name=device-type]').addEventListener('change',Actions.update);
   document.querySelector('#copy-output').addEventListener('click',Actions.copy);
   document.querySelector('#download-output').addEventListener('click',Actions.save);
-  document.querySelector('#help').addEventListener('click',Actions.help);
+  document.querySelector('label[for=download-modal]').addEventListener('click',() => {
+    document.querySelector('input[name=download_name]').value = 'toggle_keys.lua';
+  })
+  // document.querySelector('#help').addEventListener('click',Actions.help);
   window.addEventListener('keydown',(e) => {
     if (e.target.tagName === 'INPUT') {
       if (e.target.classList.contains('number')) {
